@@ -1,0 +1,9 @@
+#!bin/bash
+#
+
+sudo dnf install gcc make
+sudo dnf install openssl openssl-libs
+sudo dnf install zip libzip
+sudo dnf install dos2unix
+sudo dnf install expat expat-devel
+sudo dnf install cpanminus

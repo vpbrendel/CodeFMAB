@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+
+sudo cpanm -n HTML::Tree
+sudo cpanm -n HTTP::Daemon HTTP::Cookies
+sudo cpanm -n LWP::Protocol::https LWP::Simple
+sudo cpanm -n XML::Parser XML::SAX::Expat XML::Simple
+sudo cpanm -n IO::Socket::SSL
