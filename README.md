@@ -1,2 +1,2 @@
 # CodeFMAB
-Code and supplementary documents spporting the FMAB book project
+Code and supplementary documents supporting the FMAB book project
