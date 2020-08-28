@@ -1,0 +1,63 @@
+#!/bin/bash
+
+#NCBI "Welcome to E-utilities for PubMed" Sample Code for Class
+#      Exercises; source:
+#  https://dataguide.nlm.nih.gov/classes/intro/samplecode.html
+
+
+#5. Find the most commonly-discussed topics of articles written
+#   by authors from a specific department
+#
+echo "DNA AND methylation AND social AND insect AND    \
+     (\"1991/01/01\"[PDAT] : \"2020/12/31\"[PDAT])"    \
+ > searchstring.txt
+
+#5.1: Find the most prolific authors in the topic area
+#
+esearch -db pubmed -query "$(cat searchstring.txt)"   > esearch.out
+# ... tell us the number of records (PubMed articles) retrieved:
+echo ""
+echo "Number of records (PubMed articles) retrieved for query"
+echo "  '$(cat searchstring.txt)':"
+echo ""
+egrep Count esearch.out | cut -d">" -f2 | cut -d"<" -f1
+echo ""
+echo "Now showing the top 10 most prolific authors:"
+echo ""
+cat esearch.out | efetch -format xml   | \
+xtract -pattern Author -sep " " -element LastName,Initials   | \
+sort-uniq-count-rank   | \
+head -n 10
+echo ""
+
+#5.2: Let's retrieve the abstracts of the papers:
+#
+cat esearch.out | efetch -format abstract > searchresults.abstracts
+echo "The abstracts of the papers have been written to file"
+echo "  searchresults.abstracts"
+echo "with the most recent publications on top. Displaying the first"
+echo "few lines of the file shows us the most recent publication:"
+echo ""
+head -n 20 searchresults.abstracts
+echo ""
+echo ""
+echo ""
+
+#5.3: Let's get the citations in bibtex format for inclusion in
+#     the *.bib file of our own paper (being prepared in LaTex):
+#
+# .. first get a file we need:
+curl -O https://raw.githubusercontent.com/vpbrendel/CodeFMAB/master/BSKL/pubmed2bibtex.xsl
+# ... and now:
+cat esearch.out | efetch -format xml   | \
+tail -n +3   | \
+xsltproc pubmed2bibtex.xsl - > searchresults.bib
+echo ""
+echo ""
+echo "All citations have been saved in bibtex format in file"
+echo "  searchresults.bib"
+echo ""
+echo "Thanks to Thomas Fischer for making the pubmed2bibtex.xsl"
+echo "Extensible Stylesheet Language Transformation file available."
+echo "Source:"
+echo " http:/www.genomearchitecture.com/static/misc/pubmed2bibtex.xsl"
