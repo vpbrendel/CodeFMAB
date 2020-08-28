@@ -18,5 +18,6 @@ echo "Genetics[AD] AND Development[AD] AND   \
 esearch -db pubmed -query "$(cat searchstring.txt)"   > 01esearch.out
 cat 01esearch.out | efetch -format xml > 02searchresults.xml
 cat 02searchresults.xml   | \
-    xtract -pattern DescriptorName -element DescriptorName   > 03xtract.out
+    xtract -pattern DescriptorName -element DescriptorName   >   \
+    03xtract.out
 cat 03xtract.out | sort-uniq-count-rank   > 04ranked.out

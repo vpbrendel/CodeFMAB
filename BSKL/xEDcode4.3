@@ -17,7 +17,8 @@ echo "Genetics[AD] AND Development[AD] AND   \
 #
 # ... first pull the file checktags.txt from our github repository:
 #
-curl -O https://raw.githubusercontent.com/vpbrendel/CodeFMAB/master/BSKL/checktags.txt
+curl -O "https://raw.githubusercontent.com/vpbrendel/CodeFMAB/"`
+        `"master/BSKL/checktags.txt"
 # ... edit to allow accurate filtering for Major Topics below
 sed -e "s/^/N/;" checktags.txt > nchecktags.txt
 

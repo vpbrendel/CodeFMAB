@@ -2,18 +2,20 @@
 #
 
 echo ""
-echo "As an illustration of NCBI EDirect, we are going to fetch the genome"
-echo "sequence of bacteriophage lambda and deposit it as file lambda.fa"
-echo "into the current directory. We have prior knowledge that the NCBI"
-echo "accession for the sequence is NC_001416."
+echo "As an illustration of NCBI EDirect, we are going to fetch the"
+echo "genome sequence of bacteriophage lambda and deposit it as file"
+echo "lambda.fa into the current directory. We have prior knowledge"
+echo "that the NCBI" echo "accession for the sequence is NC_001416."
 echo ""
 
 echo "... now running:"
 echo ""
-echo "esearch -db nucleotide -query "NC_001416" | efetch -format fasta > lambda.fa"
+echo "esearch -db nucleotide -query "NC_001416" |"`
+     `"efetch -format fasta > lambda.fa"
 echo ""
 
-esearch -db nucleotide -query "NC_001416" | efetch -format fasta > lambda.fa
+esearch -db nucleotide -query "NC_001416" | efetch -format fasta >   \
+	lambda.fa
 
 echo ""
 echo "You should see lambda.fa in your current directory now."

@@ -5,8 +5,8 @@
 #  https://dataguide.nlm.nih.gov/classes/intro/samplecode.html
 
 
-#5. Find the most commonly-discussed topics of articles written
-#   by authors from a specific department
+#5. Find articles on a particular subject, here DNA methylation
+#   in social insects
 #
 echo "DNA AND methylation AND social AND insect AND    \
      (\"1991/01/01\"[PDAT] : \"2020/12/31\"[PDAT])"    \
@@ -47,7 +47,8 @@ echo ""
 #     the *.bib file of our own paper (being prepared in LaTex):
 #
 # .. first get a file we need:
-curl -O https://raw.githubusercontent.com/vpbrendel/CodeFMAB/master/BSKL/pubmed2bibtex.xsl
+curl -O "https://raw.githubusercontent.com/vpbrendel/CodeFMAB/"`
+        `"master/BSKL/pubmed2bibtex.xsl"
 # ... and now:
 cat esearch.out | efetch -format xml   | \
 tail -n +3   | \
