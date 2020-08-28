@@ -30,7 +30,7 @@ You should now be ready to use EDirect.
 ## A simple test
 As a usage example, we shall download the bacteriophage lambda genome sequence from NCBI.
 We assume prior knowledge that the database entry has accession number NC_001416.
-The script [xgetLambda](.xgetLambda) executes
+The script [xgetLambda](./xgetLambda) executes
 
 ```bash
 esearch -db nucleotide -query "NC_001416" | efetch -format fasta > lambda.fa
