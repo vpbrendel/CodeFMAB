@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#NCBI "Welcome to E-utilities for PubMed" Sample Code for Class
+#      Exercises; source:
+#  https://dataguide.nlm.nih.gov/classes/intro/samplecode.html
+
+
+#4. Find the most commonly-discussed topics of articles written
+#   by authors from a specific department
+#
+echo "Genetics[AD] AND Development[AD] AND   \
+      \"Cell Biology\"[AD] AND   \
+      \"Iowa State University\"[AD]\""   \
+ > searchstring.txt
+
+#Version 4.1: Basic
+#
+esearch -db pubmed -query "$(cat searchstring.txt)"   | \
+efetch -format xml   | \
+xtract -pattern DescriptorName -element DescriptorName   | \
+sort-uniq-count-rank   | \
+head -n 25

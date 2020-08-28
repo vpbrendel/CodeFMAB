@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#NCBI "Welcome to E-utilities for PubMed" Sample Code for Class
+#      Exercises"; source:
+#  https://dataguide.nlm.nih.gov/classes/intro/samplecode.html
+
+
+#2. Generate a list of funding agencies that are most active in
+#   funding a particular topic
+#
+esearch -db pubmed -query   \
+  "(diabetes AND pregnancy) AND
+   (\"2015/01/01\"[PDAT] : \"2020/12/31\"[PDAT])"   | \
+efetch -format xml   | \
+xtract -pattern Grant -element Agency   | \
+sort-uniq-count-rank   | \
+head -n 10
