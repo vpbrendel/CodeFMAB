@@ -11,6 +11,8 @@ sudo apt install zip zlib1g-dev
 sudo apt install dos2unix
 sudo apt install expat libexpat1-dev
 sudo apt install cpanminus
+sudo apt install bibutils
+sudo apt install xsltproc
 
 sudo apt-get update
 sudo apt-get upgrade

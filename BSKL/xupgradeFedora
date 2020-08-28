@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 #
 
 sudo dnf install gcc make
@@ -7,3 +7,5 @@ sudo dnf install zip libzip
 sudo dnf install dos2unix
 sudo dnf install expat expat-devel
 sudo dnf install cpanminus
+sudo dnf install bibutils
+sudo dnf install libxslt
