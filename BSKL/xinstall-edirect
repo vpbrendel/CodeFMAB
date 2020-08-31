@@ -14,7 +14,7 @@ perl -MNet::FTP -e \
 gunzip -c edirect.tar.gz | tar xf -
 rm edirect.tar.gz
 # ... correcting a minor mistake in the code as currently distributed
-#     (Augusti 27, 2020; reported):
+#     (August 27, 2020; reported):
 sed -i -e "s/HTTP:Cookies/HTTP::Cookies/" edirect/setup-deps.pl
 
 echo "" >> ~/.profile
