@@ -7,5 +7,6 @@ sudo dnf install zip libzip
 sudo dnf install dos2unix
 sudo dnf install expat expat-devel
 sudo dnf install cpanminus
+sudo dnf install nano
 sudo dnf install bibutils
 sudo dnf install libxslt
