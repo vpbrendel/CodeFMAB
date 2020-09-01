@@ -20,7 +20,7 @@ sed -i -e "s/HTTP:Cookies/HTTP::Cookies/" edirect/setup-deps.pl
 echo "" >> ~/.profile
 echo "# set PATH so it includes the edirect if it exists" >> ~/.profile
 echo "if [ -d  $INSTALLDIR/edirect  ] ; then" >> ~/.profile
-echo "    PATH=$INSTALLDIR/edirect:$PATH" >> ~/.profile
+echo "    PATH=$PATH:$INSTALLDIR/edirect" >> ~/.profile
 echo "fi" >> ~/.profile
 
 ./edirect/setup.sh
