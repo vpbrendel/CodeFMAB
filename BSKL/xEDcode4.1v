@@ -13,7 +13,7 @@ echo "Genetics[AD] AND Development[AD] AND   \
       \"Iowa State University\"[AD]\""   \
  > searchstring.txt
 
-#Version 4.4: Explore the pipeline steps one by one
+#Version 4.1v: Explore the pipeline steps one by one
 #
 esearch -db pubmed -query "$(cat searchstring.txt)"   > 01esearch.out
 cat 01esearch.out | efetch -format xml > 02searchresults.xml
