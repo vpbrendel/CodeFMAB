@@ -14,10 +14,10 @@ esearch -db pubmed -query   \
 efetch -format xml   | \
 xtract -pattern PubmedArticle -block PubDate   \
        -element Year MedlineDate   | \
-cut -c -4   | \
+cut -c-4   | \
 egrep "[0-9]{4}"   | \
 sort-uniq-count-rank    | \
-sort -n -t $'\t' -k 2 > fentanyl_abuse.txt
+sort -n -t $'\t' -k2 > fentanyl_abuse.txt
 
 esearch -db pubmed -query   \
    "oxycodone abuse" -datetype PDAT   \
@@ -25,14 +25,13 @@ esearch -db pubmed -query   \
 efetch -format xml   | \
 xtract -pattern PubmedArticle -block PubDate   \
        -element Year MedlineDate   | \
-cut -c -4   | \
+cut -c-4   | \
 egrep "[0-9]{4}"   | \
 sort-uniq-count-rank   | \
-sort -n -t $'\t' -k 2 > oxycodone_abuse.txt
+sort -n -t $'\t' -k2 > oxycodone_abuse.txt
 
 join -j 2 -o 0,1.1,2.1 -a1 -a2 -e0 -t $'\t'   \
-   <(cat fentanyl_abuse.txt)   \
-   <(cat oxycodone_abuse.txt)   \
+   fentanyl_abuse.txt oxycodone_abuse.txt   \
    > abuse_compare.txt
 
 ls *abuse*.txt
