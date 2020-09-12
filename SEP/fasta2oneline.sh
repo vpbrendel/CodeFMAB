@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+
+if [ $# -eq 0 ]; then
+  echo "Usage: fasta2oneline <inputfile>"
+  echo ""
+  echo "... writes the FASTA-formatted <inputfile> to output"
+  echo "    OL<inputfile>, with the sequence on one line."
+  exit
+fi
+
+infile=$1
+outfile=OL$infile.fa
+
+cat <(head -1 $infile) <(tail -n +2 myseq1.fa   | \
+tr -d "\n") | tr "T" "U"   | \
+sed '$a\' > $outfile
