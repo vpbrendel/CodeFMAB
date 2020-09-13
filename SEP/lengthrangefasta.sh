@@ -21,7 +21,7 @@ csplit -f fasta -n 7 $infile '/>/' '{*}' > /dev/null
 
 for file in fasta0*
 do
-  /home/vbrendel/Documents/BOOK/CodeFMAB/BSKL/fasta2length.sh $file >> lengths
+  fasta2length.sh $file >> lengths
 done
 if [ $# -eq 2 ]; then
   sort -nr lengths | head -n $2

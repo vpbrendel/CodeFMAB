@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+
+mkdir NOROVIRUS
+cd NOROVIRUS
+datasets download assembly taxon 142786 --filename norovirus.zip
+unzip norovirus.zip
+cat ncbi_dataset/data/*/*genomic.fna > norovirusDNA
+lengthrangefasta.sh norovirusDNA 5

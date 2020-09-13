@@ -1,0 +1,227 @@
+#!/bin/csh -f
+# XMKNR update: September 12, 2020.
+#
+
+# - a csh script to produce a non-redundant sequence set using vmatch.
+
+set input          =  0
+set minlgth        =  1
+set maxlgth        =  100000
+set seedlength     =  5
+set seedlength_set =  0
+set minpid         = 70
+set minpid_set     =  0
+set xdropv         =  2
+set psmall         = 90
+set plarge         = 90
+set alphabet       = "protein"
+set showalignment  =  0
+
+set cleanup   =  0
+
+set argv=(`getopt i:a:dl:L:x:e:s:p:P:c $*`)
+set i = 1
+while ($i < $#argv)
+	switch ($argv[$i])
+		case -i*:
+			set input = 1
+			@ i = $i + 1
+			set dbfname = $argv[$i]
+			breaksw
+		case -a*:
+			@ i = $i + 1
+			set alphabet = $argv[$i]
+			breaksw
+		case -d*:
+			set showalignment = 1
+		 	breaksw
+		case -l*:
+			@ i = $i + 1
+			set minlgth = $argv[$i]
+			breaksw
+		case -L*:
+			@ i = $i + 1
+			set maxlgth = $argv[$i]
+			breaksw
+		case -e*:
+			@ i = $i + 1
+			set seedlength_set = 1
+			set seedlength = $argv[$i]
+		 	breaksw
+		case -x*:
+			@ i = $i + 1
+			set xdropv = $argv[$i]
+		 	breaksw
+		case -s*:
+			@ i = $i + 1
+			set minpid_set = 1
+			set minpid = $argv[$i]
+		 	breaksw
+		case -p*:
+			@ i = $i + 1
+			set psmall = $argv[$i]
+		 	breaksw
+		case -P*:
+			@ i = $i + 1
+			set plarge = $argv[$i]
+		 	breaksw
+		case -c*:
+			set cleanup = 1
+		 	breaksw
+		default:
+		 	breaksw
+	endsw
+@ i = $i + 1
+end
+
+
+if ( $#argv == 1  ||  $input == 0  || \
+     !($alphabet == "protein"  ||  $alphabet == "dna") )  then
+echo "USAGE: xmknr -i dbfname [-a alphabet] [-d]"
+echo "         [-l minlgth] [-L maxlgth] [-e seedlength] [-x xdropv]"
+echo "         [-s minpid] [-p psmall] [-P plarge] [-c]"
+echo ""
+echo "  where:"
+echo ""
+echo "       dbfname    = sequence database (multi-FASTA format)"
+echo "       alphabet   = protein [default] or dna"
+echo "       minlgth    = minimum length of selected sequences [default: 1]"
+echo "       maxlgth    = maximum length of selected sequences [default: 100000]"
+echo "       seedlength = seedlength parameter for vmatch"
+echo "			   [default: 6 for protein, 30 for dna]"
+echo "       xdropv     = vmatch -exdrop parameter [default: 2]"
+echo "       minpid     = vmatch -identity parameter"
+echo "                     [default: 70 for protein, 90 for dna]"
+echo "       psmall     = vmatch -dbcluster psmall parameter [default: 90]"
+echo "       plarge     = vmatch -dbcluster plarge parameter [default: 90]"
+echo ""
+echo "       -d         : display alignment files"
+echo "       -c         : clean up"
+exit
+endif
+
+if ( $cleanup == 1) then
+  \rm "$dbfname".al1 "$dbfname".des "$dbfname".prj "$dbfname".ois "$dbfname".sds "$dbfname".ssp "$dbfname".tis
+  \rm -r "$dbfname""$minlgth"*
+  \rm "$dbfname"-info
+  exit
+endif
+
+
+set MKVHOME   = "~/src/vmatch.distribution"
+if ( $alphabet == protein ) then
+  set SMAP      = "-smap "$MKVHOME"/TRANS/TransProt21"
+  set PRFXL     = "-pl"
+  set VMATCHOPT = "-seedlength $seedlength -exdrop $xdropv -identity $minpid"
+else
+  set SMAP      = "-smap "$MKVHOME"/TRANS/TransDNA"
+  set PRFXL     = "-pl"
+  if ( $seedlength_set == 0) then
+    set seedlength = 30
+  endif
+  if ( $minpid_set == 0) then
+    set minpid    = 90
+  endif
+  set VMATCHOPT = "-seedlength $seedlength -exdrop $xdropv -identity $minpid -d -p"
+endif
+set LITABLES  = "-ois -bck -suf -lcp -tis -bwt -sti1"
+set SELECT    = "# ... selected number of sequences ($minlgth <= length <= $maxlgth):"
+set DBCLUSTER = "-dbcluster $psmall $plarge"
+
+echo ""
+echo "Now excecuting"
+if ($showalignment == 1) then
+  echo "	xmknr -i $dbfname -a $alphabet -d -l $minlgth -L $maxlgth -e $seedlength -x $xdropv -s $minpid -p $psmall -P $plarge ..."
+else
+  echo "	xmknr -i $dbfname -a $alphabet -l $minlgth -L $maxlgth -e $seedlength -x $xdropv -s $minpid -p $psmall -P $plarge ..."
+endif
+echo ""
+
+
+
+#STEP 1:
+
+if ( -f "$dbfname".prj ) then
+  echo "#"
+  echo "# ... small index $dbfname already exists."
+else
+  echo "# ... making small index for $dbfname ..."
+  mkvtree -v $SMAP -tis -ois -indexname $dbfname -db $dbfname
+endif
+
+
+#STEP 2:
+
+set dbfnameLR = "$dbfname""$minlgth""-""$maxlgth"
+  echo "#"
+  echo "# ... select sequences of length >= $minlgth and <= $maxlgth ..."
+  echo "# ... selected sequences are saved in $dbfnameLR"
+
+vseqselect -minlength $minlgth -maxlength $maxlgth $dbfname > $dbfnameLR
+
+  echo "$SELECT `grep '^>' $dbfnameLR | wc -l`"
+  echo "$SELECT `grep '^>' $dbfnameLR | wc -l`" > "$dbfname"-info
+
+
+#STEP 3:
+
+if ( -f "$dbfnameLR".prj ) then
+  echo "#"
+  echo "# ... large index "$dbfnameLR" already exists."
+else
+  echo "#"
+  echo "# ... making large index for "$dbfnameLR" ..."
+  mkvtree -v $SMAP $PRFXL $LITABLES -indexname "$dbfnameLR" -db "$dbfnameLR"
+endif
+
+
+#STEP 4:
+
+# cluster the sequences: 100 100 means that both matches should fully
+# cover the sequences containing the matches. Thus it means duplications
+# -l ${LR} means to look for matches of the given least length,
+# and then cluster accordingly. -nonredundant means to output for
+# each cluster of identical sequences only one sequence.
+# Sequences which do not match anywhere are also output.
+#
+
+  echo "#"
+  echo "# ... generating vmatch index files with options $VMATCHOPT"
+  echo "#"
+  echo "#     ... and clusters according to option $DBCLUSTER ...:"
+  echo "#"
+  echo "vmatch -v ${VMATCHOPT} -s 80 $DBCLUSTER "$dbfnameLR".cls $dbfnameLR >> "$dbfname"-info"
+  echo "#"
+  vmatch -v ${VMATCHOPT} -s 80 $DBCLUSTER "$dbfnameLR".cls $dbfnameLR >> "$dbfname"-info
+
+
+#STEP 5:
+set NRFILE = "$dbfnameLR"NR
+
+  echo "#"
+  echo "# ... selecting non-redundant sequences and storing them in ${NRFILE}:"
+  echo "#"
+  echo "vmatch -v ${VMATCHOPT} $DBCLUSTER -nonredundant $NRFILE $dbfnameLR >> "$dbfname"-info"
+  echo "#"
+  vmatch -v ${VMATCHOPT} $DBCLUSTER -nonredundant $NRFILE $dbfnameLR >> "$dbfname"-info
+
+  echo "#"
+  echo "# ... remaining number of sequences after removing duplicates: `grep '^>' $NRFILE | wc -l`"
+  echo "# ... remaining number of sequences after removing duplicates: `grep '^>' $NRFILE | wc -l`" >> "$dbfname"-info
+
+if ( ! (-e "$dbfnameLR"-CDR) ) then
+  mkdir "$dbfnameLR"-CDR
+endif
+  echo "#"
+  echo "# ... moving cluster files into directory "$dbfnameLR"-CDR" 
+  if ($showalignment == 1) then
+    foreach file ("$dbfnameLR".cls.*.match)
+      vmatchselect -s 80 $file > "$file".aln
+      \mv "$file"* "$dbfnameLR"-CDR
+    end
+  endif
+  foreach file ("$dbfnameLR".cls.*.fna)
+    \mv $file "$dbfnameLR"-CDR
+  end
+  echo "#"
+  echo "# ... done"
