@@ -13,9 +13,6 @@ perl -MNet::FTP -e \
     $ftp->get("/entrez/entrezdirect/edirect.tar.gz");'
 gunzip -c edirect.tar.gz | tar xf -
 rm edirect.tar.gz
-# ... correcting a minor mistake in the code as currently distributed
-#     (August 27, 2020; reported):
-sed -i -e "s/HTTP:Cookies/HTTP::Cookies/" edirect/setup-deps.pl
 
 echo "" >> ~/.profile
 echo "# set PATH so it includes the edirect if it exists" >> ~/.profile
