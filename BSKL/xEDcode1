@@ -8,7 +8,7 @@
 #1. Find the current "most active" authors for a given topic
 #
 esearch -db pubmed -query   \
-  "(diabetes AND pregnancy) AND
+  "(diabetes AND pregnancy) AND   \
    (\"2015/01/01\"[PDAT] : \"2020/12/31\"[PDAT])"   | \
 efetch -format xml   | \
 xtract -pattern Author -sep " " -element LastName,Initials   | \
