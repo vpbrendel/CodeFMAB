@@ -12,6 +12,5 @@ fi
 infile=$1
 outfile=OL$infile.fa
 
-cat <(head -1 $infile) <(tail -n +2 myseq1.fa   | \
-tr -d "\n") | tr "T" "U"   | \
-sed '$a\' > $outfile
+cat <(head -1 $infile) <(tail -n +2 $infile   | \
+  tr -d "\n") | sed '$a\' > $outfile
