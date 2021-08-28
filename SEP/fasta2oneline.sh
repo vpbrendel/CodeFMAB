@@ -10,7 +10,7 @@ if [ $# -eq 0 ]; then
 fi
 
 infile=$1
-outfile=OL$infile.fa
+outfile=OL$infile
 
 cat <(head -1 $infile) <(tail -n +2 $infile   | \
   tr -d "\n") | sed '$a\' > $outfile
