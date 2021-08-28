@@ -5,12 +5,12 @@ echo ""
 echo "As an illustration of NCBI EDirect, we are going to fetch the"
 echo "genome sequence of bacteriophage lambda and deposit it as file"
 echo "lambda.fa into the current directory. We have prior knowledge"
-echo "that the NCBI" echo "accession for the sequence is NC_001416."
+echo "that the NCBI accession for the sequence is NC_001416."
 echo ""
 
 echo "... now running:"
 echo ""
-echo "esearch -db nucleotide -query "NC_001416" |"`
+echo "esearch -db nucleotide -query "NC_001416" | "`
      `"efetch -format fasta > lambda.fa"
 echo ""
 
