@@ -14,6 +14,7 @@ sudo apt install cpanminus
 sudo apt install nano
 sudo apt install bibutils
 sudo apt install xsltproc
+sudo apt install curl
 
 sudo apt-get update
 sudo apt-get upgrade
