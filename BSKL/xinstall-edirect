@@ -14,6 +14,23 @@ perl -MNet::FTP -e \
 gunzip -c edirect.tar.gz | tar xf -
 rm edirect.tar.gz
 
+# Adding accessory programs:
+#
+cd edirect
+wget https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/xtract.Linux.gz
+gunzip xtract.Linux.gz 
+chmod a+x xtract.Linux 
+
+wget https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/transmute.Linux.gz
+gunzip -f transmute.Linux.gz 
+chmod a+x transmute.Linux 
+
+wget https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/rchive.Linux.gz
+gunzip -f rchive.Linux.gz 
+chmod a+x rchive.Linux 
+
+# Finishing up:
+#
 echo "" >> ~/.profile
 echo "# set PATH so it includes the edirect if it exists" >> ~/.profile
 echo "if [ -d  $INSTALLDIR/edirect  ] ; then" >> ~/.profile
