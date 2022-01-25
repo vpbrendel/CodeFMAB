@@ -20,7 +20,6 @@ echo "if [ -d  $INSTALLDIR/edirect  ] ; then" >> ~/.profile
 echo "    PATH=$PATH:$INSTALLDIR/edirect" >> ~/.profile
 echo "fi" >> ~/.profile
 
-./edirect/setup.sh
 echo ""
 echo "One more step:"
 echo ""
