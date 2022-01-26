@@ -10,11 +10,11 @@ echo ""
 
 echo "... now running:"
 echo ""
-echo "esearch -db nucleotide -query "NC_001416" | "`
+echo "esearch -db nuccore -query "NC_001416" | "`
      `"efetch -format fasta > lambda.fa"
 echo ""
 
-esearch -db nucleotide -query "NC_001416" | efetch -format fasta >   \
+esearch -db nuccore -query "NC_001416" | efetch -format fasta >   \
 	lambda.fa
 
 echo ""

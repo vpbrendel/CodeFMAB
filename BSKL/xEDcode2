@@ -10,7 +10,7 @@
 #
 esearch -db pubmed -query   \
   "(diabetes AND pregnancy) AND   \
-   (\"2015/01/01\"[PDAT] : \"2020/12/31\"[PDAT])"   | \
+   (\"2015/01/01\"[PDAT] : \"2022/12/31\"[PDAT])"   | \
 efetch -format xml   | \
 xtract -pattern Grant -element Agency   | \
 sort-uniq-count-rank   | \

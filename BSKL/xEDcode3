@@ -10,7 +10,7 @@
 #
 esearch -db pubmed -query   \
    "fentanyl abuse" -datetype PDAT   \
-   -mindate 1988 -maxdate 2020   | \
+   -mindate 1988 -maxdate 2022   | \
 efetch -format xml   | \
 xtract -pattern PubmedArticle -block PubDate   \
        -element Year MedlineDate   | \
@@ -21,7 +21,7 @@ sort -n -t $'\t' -k2 > fentanyl_abuse.txt
 
 esearch -db pubmed -query   \
    "oxycodone abuse" -datetype PDAT   \
-   -mindate 1988 -maxdate 2020   | \
+   -mindate 1988 -maxdate 2022   | \
 efetch -format xml   | \
 xtract -pattern PubmedArticle -block PubDate   \
        -element Year MedlineDate   | \

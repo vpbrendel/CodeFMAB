@@ -1,27 +1,44 @@
 # CodeFMAB - Appendix: Bioinformatics Skills
 This directory contains code referenced in the "Bioinformatics Skills" appendix.
 
-## Installing NCBI EDirect
-[NCBI EDirect](https://dataguide.nlm.nih.gov/edirect/overview.html) allows programmatic access to [NCBI E-utilites](https://dataguide.nlm.nih.gov/eutilities/what_is_eutilities.html) from a Unix-like shell.
+## NCBI EDirect
+[NCBI EDirect](https://www.ncbi.nlm.nih.gov/books/NBK179288/) allows programmatic access to [NCBI E-utilites](https://www.ncbi.nlm.nih.gov/books/NBK25501/) from a Unix-like shell.
+Here we will show you how to install the software and demonstrate its versatile applications.
+Initial examples have been modeled after records of no longer offered NCBI Insider's Guide classes on [EDirect](https://dataguide.nlm.nih.gov/edirect/overview.html) and [E-utilities](https://dataguide.nlm.nih.gov/eutilities/what_is_eutilities.html).
 
-
-[Installation of EDirect](https://dataguide.nlm.nih.gov/edirect/install.html) is straightforward.
+## Installation
+Installation of EDirect is straightforward.
 You will need to have a few system packages installed; see files [xupgradeFedora](./xupgradeFedora) and [xupgradeUbuntu](./xupgradeUbuntu) for sample upgrade scripts to run, depending on your flavor of Linux.
 Furthermore, EDirect requires some Perl packages, which can be installed with the script [xcpanm](./xcpanm).
+Thus, on an Ubuntu system, the following commands should take care of the pre-requisites:
+
+```
+sudo ./xupgradeUbuntu
+suod ./xcpanm
+```
+
 After these preliminaries, [xinstall-edirect](./xinstall-edirect) will install EDirect into the current directory.
-To make the EDirect scripts accessible from any shell, add the following to your ~/.bashrc file (or equivalent if you use a different shell type)
+It is recommended to install into a common directory for external packages, for example
+
+```
+mkdir $HOME/src
+cp xinstall-edirect $HOME/src
+cd $HOME/src
+bash ./xinstall-edirect
+```
+
+To make the EDirect scripts accessible from any shell, add the following to your ~/.profile file (or equivalent if you use a different shell type):
 
 ```bash
-# Source local definitions
-if [ -f ~/.profile ]; then
-        . ~/.profile
+if [ -d "$HOME/src/edirect" ] ; then
+    PATH="$PATH:$HOME/src/edirect"
 fi
 ```
 
-and activate the $PATH change by
+To activate the $PATH change in the current shell, type
 
 ```bash
-source ~/.bashrc
+source ~/.profile
 ```
 
 That's all.

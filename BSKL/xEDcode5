@@ -9,7 +9,7 @@
 #   in social insects
 #
 echo "DNA AND methylation AND social AND insect AND    \
-     (\"1991/01/01\"[PDAT] : \"2020/12/31\"[PDAT])"    \
+     (\"1991/01/01\"[PDAT] : \"2022/12/31\"[PDAT])"    \
  > searchstring.txt
 
 #5.1: Find the most prolific authors in the topic area
