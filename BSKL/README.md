@@ -27,7 +27,7 @@ cd $HOME/src
 bash ./xinstall-edirect
 ```
 
-To make the EDirect scripts accessible from any shell, add the following to your ~/.profile file (or equivalent if you use a different shell type):
+To make the EDirect scripts accessible from any shell after login, add the following to your ~/.profile file (or equivalent if you use a different shell type):
 
 ```bash
 if [ -d "$HOME/src/edirect" ] ; then
