@@ -108,7 +108,7 @@ if ( $cleanup == 1) then
 endif
 
 
-set MKVHOME   = "~/src/vmatch.distribution"
+set MKVHOME   = "/opt/VMATCH"
 if ( $alphabet == protein ) then
   set SMAP      = "-smap "$MKVHOME"/TRANS/TransProt21"
   set PRFXL     = "-pl"
