@@ -78,24 +78,27 @@ In order to complete the configuration process, please add the following
  file (or use appropriately modified commands if you are using a non-bash shell):
 
 edirectDIR=${PWD}/edirect
-case \":\${PATH:=\$edirectDIR}:\" in
+if [ -d \$edirectDIR ] ; then
+  case \":\${PATH:=\$edirectDIR}:\" in
     *:\"\$edirectDIR\":*)  ;;
     *) PATH=\"\$PATH:\$edirectDIR\"  ;;
-esac
-export PATH=\${PATH}
+  esac
+  export PATH=\${PATH}
+fi
 "
 
 echo "$todo"
 
 
-case ":$PATH:" in
-  *:$HOME/edirect:*)
+edirectDIR=${PWD}/edirect
+case ":${PATH:=$edirectDIR}:" in
+  *:"$edirectDIR":*)
     ;;
   *)
     echo ""
     echo "To activate EDirect for this terminal session, please execute the following:"
     echo ""
-    printf "export PATH=\${PATH}:\${PWD}/edirect\n"
+    printf "export PATH=\${PATH}:$edirectDIR\n"
     echo ""
     ;;
 esac

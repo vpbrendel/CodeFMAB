@@ -1,0 +1,57 @@
+sudo apt-get update && \
+  sudo apt-get install -y build-essential \
+  libssl-dev uuid-dev libseccomp-dev \
+  pkg-config squashfs-tools cryptsetup
+
+export VERSION=1.17.7 OS=linux ARCH=amd64  # change this as you need
+
+wget -O /tmp/go${VERSION}.${OS}-${ARCH}.tar.gz https://dl.google.com/go/go${VERSION}.${OS}-${ARCH}.tar.gz && \
+  sudo tar -C /usr/local -xzf /tmp/go${VERSION}.${OS}-${ARCH}.tar.gz
+
+
+#echo 'export GOPATH=${HOME}/go' >> ~/.bashrc && \
+#  echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc && \
+#  echo "Please execute 'source ~/.bashrc' before proceeding with './xinstallSingularityStep2'."
+
+todo="
+In order to complete the configuration process, please add the following
+ lines to your ~/.profile, ~/.bash_profile, or ~/.bashrc shell configuration
+ file (or use appropriately modified commands if you are using a non-bash shell):
+
+export GOPATH=\${HOME}/go
+
+usrlocalgoDIR=/usr/local/go/bin
+if [ -d \$usrlocalgoDIR ] ; then
+  case \":\${PATH:=\$usrlocalgoDIR}:\" in
+    *:\"\$usrlocalgoDIR\":*)  ;;
+    *) PATH=\"\$PATH:$usrlocalgoDIR\"  ;;
+  esac
+  export PATH=\${PATH}
+fi
+
+homegoDIR=\${GOPATH}/bin
+  case \":\${PATH:=\$homegoDIR}:\" in
+    *:\"\$homegoDIR\":*)  ;;
+    *) PATH=\"\$PATH:\$homegoDIR\"  ;;
+  esac
+  export PATH=\${PATH}
+"
+
+echo "$todo"
+
+#  echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc && \
+
+usrlocalgoDIR=/usr/local/go/bin
+homegoDIR=\${HOME}/go/bin
+case ":${PATH:=\$usrlocalgoDIR:\$homegoDIR}:" in
+  *:"$usrlocalgoDIR:$homegoDIR":*)
+    ;;
+  *)
+    echo ""
+    echo "To activate go for this terminal session, please execute the following:"
+    echo ""
+    printf "export GOPATH=\${HOME}/go\n"
+    printf "export PATH=\${PATH}:$usrlocalgoDIR:$homegoDIR\n"
+    echo ""
+    ;;
+esac
