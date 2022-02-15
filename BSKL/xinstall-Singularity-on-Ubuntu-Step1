@@ -24,7 +24,7 @@ usrlocalgoDIR=/usr/local/go/bin
 if [ -d \$usrlocalgoDIR ] ; then
   case \":\${PATH:=\$usrlocalgoDIR}:\" in
     *:\"\$usrlocalgoDIR\":*)  ;;
-    *) PATH=\"\$PATH:$usrlocalgoDIR\"  ;;
+    *) PATH=\"\$PATH:\$usrlocalgoDIR\"  ;;
   esac
   export PATH=\${PATH}
 fi
