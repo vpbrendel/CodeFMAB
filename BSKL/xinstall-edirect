@@ -85,9 +85,24 @@ if [ -d \$edirectDIR ] ; then
   esac
   export PATH=\${PATH}
 fi
-"
 
+The text to insert has been copied into file ./addTHIS2path.
+"
 echo "$todo"
+
+toadd="
+# NCBI edirect utilities:
+#
+edirectDIR=${PWD}/edirect
+if [ -d \$edirectDIR ] ; then
+  case \":\${PATH:=\$edirectDIR}:\" in
+    *:\"\$edirectDIR\":*)  ;;
+    *) PATH=\"\$PATH:\$edirectDIR\"  ;;
+  esac
+  export PATH=\${PATH}
+fi
+"
+echo "$toadd" > ./addTHIS2path
 
 
 edirectDIR=${PWD}/edirect
