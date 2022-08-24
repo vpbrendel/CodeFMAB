@@ -102,7 +102,7 @@ if [ -d \$edirectDIR ] ; then
   export PATH=\${PATH}
 fi
 "
-echo "$toadd" > ./addTHIS2path
+echo "$toadd" >> ./addTHIS2path
 
 
 edirectDIR=${PWD}/edirect
