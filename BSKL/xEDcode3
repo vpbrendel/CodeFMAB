@@ -9,7 +9,7 @@
 #   By Year” histogram, comparing two searches
 #
 esearch -db pubmed -query   \
-   "fentanyl abuse" -datetype PDAT   \
+   "fentanyl abuse" -datetype DP   \
    -mindate 1988 -maxdate 2022   | \
 efetch -format xml   | \
 xtract -pattern PubmedArticle -block PubDate   \
