@@ -14,7 +14,7 @@ Thus, on an Ubuntu system, the following commands should take care of the pre-re
 
 ```
 sudo ./xupgradeUbuntu
-suod ./xcpanm
+sudo ./xcpanm
 ```
 
 After these preliminaries, [xinstall-edirect](./xinstall-edirect) will install EDirect into the current directory.
