@@ -9,7 +9,7 @@
 #   in social insects
 #
 echo "DNA AND methylation AND social AND insect AND    \
-     (1991/01/01 : 2022/12/31 [DP])"   \
+     (1991/01/01 : 2024/12/31 [DP])"   \
  > searchstring.txt
 
 #5.1: Find the most prolific authors in the topic area
@@ -35,10 +35,20 @@ echo ""
 cat esearch.out | efetch -format abstract > searchresults.abstracts
 echo "The abstracts of the papers have been written to file"
 echo "  searchresults.abstracts"
-echo "with the most recent publications on top. Displaying the last"
-echo "few lines of the file shows us the most recent publication:"
+echo "with the oldest publications in the specified range on top. Displaying the"
+echo "lastfew lines of the file shows us the most recent publication:"
 echo ""
 tail -n 40 searchresults.abstracts
+echo ""
+echo "Maybe you are like me and would like the abstracts to be ordered differently,"
+echo "showing the latest publication first. Well, we can do this with a bit of fancy"
+echo "bash scripting:"
+echo ""
+echo "	./xrevabs searchresults.abstracts"
+echo ""
+echo "results in searchresults.abstracts_revord, which is the desired result."
+echo ""
+echo "Exercise: Explain each step in xrevabs."
 echo ""
 echo ""
 echo ""
