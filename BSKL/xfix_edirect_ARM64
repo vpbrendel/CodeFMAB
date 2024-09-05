@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+# ... after successful run of xinstall_edirect, for an ARM64 system run this
+#  script (as instructed by error messages from the NCBI code.
+
+cd edirect
+
+nquire -dwn ftp.ncbi.nlm.nih.gov entrez/entrezdirect xtract.ARM64.gz
+gunzip -f xtract.ARM64.gz
+chmod +x xtract.ARM64
+
+nquire -dwn ftp.ncbi.nlm.nih.gov entrez/entrezdirect transmute.ARM64.gz
+gunzip -f transmute.ARM64.gz
+chmod +x transmute.ARM64
+
