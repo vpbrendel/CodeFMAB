@@ -1,18 +1,20 @@
-curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh |
-  sh -s -- -b $(go env GOPATH)/bin v1.43.0
+# Create the directory and clone the repo with submodules
+mkdir -p ${GOPATH}/src/github.com/sylabs
+cd ${GOPATH}/src/github.com/sylabs
 
-mkdir -p ${GOPATH}/src/github.com/sylabs && \
-  cd ${GOPATH}/src/github.com/sylabs && \
-  git clone --recurse-submodules https://github.com/sylabs/singularity.git && \
-  cd singularity
+# Clone with submodules
+git clone --recurse-submodules https://github.com/sylabs/singularity.git
+cd singularity
 
+# Checkout the desired version
 git checkout v3.10.2
 
-cd ${GOPATH}/src/github.com/sylabs/singularity && \
-  ./mconfig && \
-  cd ./builddir && \
-  make && \
-  sudo make install
+# Update submodules again to be safe
+git submodule update --init --recursive
 
-cd
-singularity version
+# Build
+./mconfig
+cd builddir
+make
+sudo make install
+
