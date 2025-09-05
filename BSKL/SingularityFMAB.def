@@ -1,5 +1,5 @@
 bootstrap: docker
-From: fedora:34
+From: fedora:42
 
 %post
     dnf -y update
@@ -7,14 +7,14 @@ From: fedora:34
     dnf -y install gcc gcc-c++ gcc-gfortran make
 
 
-    echo 'Installing BLAST+ version 2.12.0 from NCBI '
+    echo 'Installing BLAST+ version 2.17.0 from NCBI '
     #### Prerequisites
     #### Install
     cd /opt
-    wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.12.0/ncbi-blast-2.12.0+-x64-linux.tar.gz
-    tar -xzf ncbi-blast-2.12.0+-x64-linux.tar.gz
-    rm ncbi-blast-2.12.0+-x64-linux.tar.gz
-    ln -s ncbi-blast-2.12.0+ BLAST
+    wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.17.0/ncbi-blast-2.17.0+-x64-linux.tar.gz
+    tar -xzf ncbi-blast-2.17.0+-x64-linux.tar.gz
+    rm ncbi-blast-2.17.0+-x64-linux.tar.gz
+    ln -s ncbi-blast-2.17.0+ BLAST
 
     echo 'Installing VMATCH aligner version 2.3.1 from http://vmatch.de '
     #### Prerequisites
